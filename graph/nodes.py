@@ -21,7 +21,7 @@ def search_node(state: AgentState) -> dict:
     urls = [res.get('url') for res in response["results"]]
     return {
         "search_results": urls,
-        "search_iteration": state["iteration"] + 1
+        "search_iteration": state["search_iteration"] + 1
     }
     
 
