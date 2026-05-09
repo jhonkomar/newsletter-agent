@@ -5,6 +5,10 @@ from bs4 import BeautifulSoup
 import requests
 from openai import OpenAI
 from state import AgentState
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+import datetime
 
 load_dotenv()
 
@@ -133,4 +137,41 @@ Create premium-looking HTML emails that render well on Gmail and mobile.
     }
 
 
-
+def send_email_node(state : AgentState) -> dict:
+    topic = state["topic"]
+    time = datetime.datetime.now()
+    body = state["final_html"]
+    sender = os.getenv("EMAIL_SENDER")
+    recipient = os.getenv("EMAIL_RECEIVER")
+    SMTP_SERVER = "smtp.gmail.com"
+    SMTP_PORT = 587
+    system_massage = ""
+    send_state = None
+    try:                  
+        msg = MIMEMultipart()        
+        msg['From'] = sender
+        msg['To'] = recipient
+        msg['Subject'] = f"Breaking News 🔥 {time.strftime("%d-%m-%Y %H:%M:%S")} about the topic:{topic}"
+        msg.attach(MIMEText(body, 'html'))
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()   
+            server.login(sender, os.getenv("EMAIL_PASSWORD"))  
+            server.sendmail(sender, recipient, msg.as_string())
+            system_massage = "Success: Email sent successfully."
+            send_state = True
+    except smtplib.SMTPAuthenticationError:
+        system_massage = "Error: Authentication failed. Check your App Password."
+        send_state = False
+    except smtplib.SMTPConnectError:
+        system_massage = "Error: Failed to connect to the SMTP server."
+        send_state = False
+    except smtplib.SMTPException as e:
+        system_massage = f"Error: SMTP issue occurred: {str(e)}"
+        send_state = False
+    except Exception as e:
+        system_massage = f"Error: An unexpected error occurred: {str(e)}"
+        send_state = False
+    return {
+        "send_email": system_massage,
+        "email_state": send_state
+    }

@@ -7,6 +7,8 @@ class AgentState(TypedDict):
     scraped_details: List[str]  
     summaries: List[str]
     final_html: str
+    send_email : str
+    email_state : bool
     iteration: int
 
 # state for nodes
