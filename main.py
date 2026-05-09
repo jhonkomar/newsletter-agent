@@ -18,8 +18,8 @@ initial_state = AgentState(
     final_html= None,
     search_iteration= 0,
     failure_urls = [],
-    email_sent = None,
-    email_status= None
+    send_email = None,
+    email_state= None
 )
 
 def should_continue(state: AgentState) -> str:
@@ -59,3 +59,7 @@ app = workflow.compile()
 
 
 result = app.invoke(initial_state)
+
+result = app.invoke(initial_state)
+print(result["email_state"])
+print(result["send_email"])
