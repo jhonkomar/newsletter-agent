@@ -3,6 +3,7 @@ import os
 from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 import requests
+from openai import OpenAI
 from state import AgentState
 
 load_dotenv()
@@ -37,6 +38,39 @@ def scarped_node(state : AgentState) -> list:
         "scarped_details": scraped_texts,
         "faliure_url": fal_url
     }
+
+def summary_node(state : AgentState) -> list:
+    scarped_result = state["scraped_details"]
+    summaries = []
+    client = OpenAI(
+        base_url="https://openrouter.ai/api/v1",
+        api_key= os.getenv("OPENROUTER_API_KEY"),
+        )
+    for article in scarped_result:
+        summary = client.chat.completions.create(
+            model="google/gemini-2.5-flash",
+            messages=[
+                {
+                    "role": "system",
+                    "content":"""You are an assistant that summarizes articles about coding competitions and AI development tools.
+Summarize the following article in 3-5 sentences. Focus on:
+- Event/competition name
+- Registration deadline
+- Prize or benefits
+- Link or source if available
+Be concise and informative."""},
+                {
+                    "role": "user",
+                    "content": f"{article}"
+                }
+                
+            ]
+        )
+        summaries.append(summary.choices[0].message.content)
+    return {
+        "summaries": summaries
+    }
+
 
 
 
