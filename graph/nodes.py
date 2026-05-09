@@ -56,12 +56,12 @@ def summary_node(state : AgentState) -> dict:
             messages=[
                 {
                     "role": "system",
-                    "content":"""You are an assistant that summarizes articles about coding competitions and AI development tools.
+                    "content":"""You are an assistant that summarizes articles about any topic.
 Summarize the following article in 3-5 sentences. Focus on:
-- Event/competition name
-- Registration deadline
-- Prize or benefits
-- Link or source if available
+- Main topic or subject
+- Key findings or highlights
+- Important dates or deadlines if available
+- Source or link if available
 Be concise and informative."""},
                 {
                     "role": "user",

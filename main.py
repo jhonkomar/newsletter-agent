@@ -11,7 +11,7 @@ from datetime import datetime
 
 time = datetime.now()
 initial_state = AgentState(
-    topic = f"Look for coding or AI engineering competitions where registration is still open until {time} ",
+    topic = f"Latest AI tools and frameworks news in {time}", # change this to your topic
     search_results = [],
     scraped_details = [],
     summaries = [],

@@ -1,19 +1,20 @@
-# 🔍 Scarper Event — AI-Powered Event & Competition Agent
+# 📰 Newsletter Agent
 
-An autonomous AI agent that **automatically searches, scrapes, summarizes, and delivers** the latest coding competitions and AI engineering opportunities straight to your inbox — every day.
+An autonomous AI agent that **searches, scrapes, summarizes, and delivers news about any topic straight to your inbox** — powered by LangGraph.
 
-Built with **LangGraph**, **Tavily**, **BeautifulSoup**, and **OpenRouter (Gemini 2.5 Flash)**.
+Just set your topic, and the agent does the rest.
 
 ---
 
 ## ✨ Features
 
 - 🤖 **Agentic workflow** — multi-step autonomous agent using LangGraph
-- 🔎 **Smart search** — finds relevant events via Tavily Search API
+- 🔎 **Smart search** — finds relevant articles via Tavily Search API
 - 🕸️ **Web scraping** — extracts full content from each result using BeautifulSoup
 - 📝 **AI summarization** — summarizes each article with LLM (Gemini 2.5 Flash)
-- 📧 **Auto email delivery** — sends a beautiful HTML email report to your inbox daily
+- 📧 **Auto email delivery** — sends a beautiful HTML email report to your inbox
 - 🔄 **Retry logic** — retries search up to 3x if no results found
+- 🎯 **Any topic** — customize the topic to anything you want
 
 ---
 
@@ -33,7 +34,7 @@ Built with **LangGraph**, **Tavily**, **BeautifulSoup**, and **OpenRouter (Gemin
 ## 📁 Project Structure
 
 ```
-scarper-event/
+newsletter-agent/
 ├── graph/
 │   ├── __init__.py
 │   ├── state.py        # AgentState definition
@@ -50,8 +51,8 @@ scarper-event/
 
 **1. Clone the repository**
 ```bash
-git clone https://github.com/yourusername/scarper-event.git
-cd scarper-event
+git clone https://github.com/yourusername/newsletter-agent.git
+cd newsletter-agent
 ```
 
 **2. Create virtual environment**
@@ -84,16 +85,24 @@ EMAIL_RECEIVER=receiver@gmail.com
 
 ## 🚀 Usage
 
+**1. Set your topic**
+
+Open `main.py` and change the topic to anything you want:
+```python
+topic = f"Latest AI tools and frameworks news {time}"  # change this!
+```
+
+**2. Run the agent**
 ```bash
 python main.py
 ```
 
-The agent will:
-1. Search for coding competitions & AI engineering events
+The agent will automatically:
+1. Search for relevant articles about your topic
 2. Scrape detailed content from each result
 3. Summarize each article using AI
 4. Generate a formatted HTML email
-5. Send the report to your inbox
+5. Send the newsletter to your inbox
 
 ---
 
@@ -122,11 +131,10 @@ The agent will:
 ## 📬 Sample Output
 
 The agent delivers a clean, card-based HTML email with:
-- Event/competition name
-- Registration deadline
-- Category
-- Prize or benefit
+- Article title
+- Key takeaways
 - Source link
+- Publication date (if available)
 
 ---
 
