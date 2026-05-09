@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from bs4 import BeautifulSoup
 import requests
 from openai import OpenAI
-from state import AgentState
+from graph.state import AgentState
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
