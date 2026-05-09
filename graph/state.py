@@ -9,6 +9,6 @@ class AgentState(TypedDict):
     final_html: str
     send_email : str
     email_state : bool
-    iteration: int
+    search_iterationn: int
 
 # state for nodes

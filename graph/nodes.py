@@ -21,11 +21,11 @@ def search_node(state: AgentState) -> dict:
     urls = [res.get('url') for res in response["results"]]
     return {
         "search_results": urls,
-        "iteration": state["iteration"] + 1
+        "search_iteration": state["iteration"] + 1
     }
     
 
-def scarped_node(state : AgentState) -> list:
+def scarped_node(state : AgentState) -> dict:
     urls = state["search_results"]
     fal_url = []
     scraped_texts = []
@@ -43,7 +43,7 @@ def scarped_node(state : AgentState) -> list:
         "faliure_url": fal_url
     }
 
-def summary_node(state : AgentState) -> list:
+def summary_node(state : AgentState) -> dict:
     scarped_result = state["scraped_details"]
     summaries = []
     client = OpenAI(
@@ -75,7 +75,7 @@ Be concise and informative."""},
         "summaries": summaries
     }
 
-def html_node(state : AgentState) -> str:
+def html_node(state : AgentState) -> dict:
     sum_text = state["summaries"]
     user_massage = "list article."
     for no,article in enumerate(sum_text):
