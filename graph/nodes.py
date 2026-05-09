@@ -61,7 +61,7 @@ Summarize the following article in 3-5 sentences. Focus on:
 Be concise and informative."""},
                 {
                     "role": "user",
-                    "content": f"{article}"
+                    "content": f"article : {article}"
                 }
                 
             ]
@@ -71,6 +71,66 @@ Be concise and informative."""},
         "summaries": summaries
     }
 
+def html_node(state : AgentState) -> str:
+    sum_text = state["summaries"]
+    user_massage = "list article."
+    for no,article in enumerate(sum_text):
+        user_massage += f"article {no}:{article}"
+    client = OpenAI(
+        base_url="https://openrouter.ai/api/v1",
+        api_key= os.getenv("OPENROUTER_API_KEY"),
+        )
+    html = client.chat.completions.create(
+            model="google/gemini-2.5-flash",
+            messages=[
+                {
+                    "role": "system",
+                    "content":"""You are an HTML Email Formatter.
+
+Rules:
+
+* Output only PURE HTML.
+* No markdown.
+* Inline CSS only.
+* No external libraries or CDN.
+* No explanations or intro text.
+* Output must be ready to send as email HTML.
+
+Design:
+
+* Clean, modern, readable.
+* Use card layout for each item.
+* Soft professional colors.
+* Clear typography.
+* Responsive and email-friendly.
+
+Structure:
+
+* Main wrapper with max-width.
+* Separate card for each item.
+* Modern spacing, radius, and soft shadow.
+
+If showing competitions/events:
+
+* title
+* deadline
+* category
+* benefit
+* clickable link
+
+Goal:
+Create premium-looking HTML emails that render well on Gmail and mobile.
+"""},
+                {
+                    "role": "user",
+                    "content": f"{user_massage}"
+                }
+                
+            ]
+        )
+    return {
+        "final_html": html.choices[0].message.content
+    }
 
 
 
