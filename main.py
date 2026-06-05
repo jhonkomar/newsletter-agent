@@ -2,7 +2,7 @@ from langgraph.graph import StateGraph, END
 from graph.state import AgentState
 from graph.nodes import (
     search_node,
-    scarped_node,
+    scraped_node,
     summary_node,
     html_node,
     send_email_node
@@ -33,7 +33,7 @@ def should_continue(state: AgentState) -> str:
 
 workflow = StateGraph(AgentState)
 workflow.add_node("searcher", search_node)
-workflow.add_node("scraper", scarped_node)
+workflow.add_node("scraper", scraped_node)
 workflow.add_node("summarize", summary_node)
 workflow.add_node("html_maker", html_node)
 workflow.add_node("email_sender", send_email_node)
@@ -57,8 +57,6 @@ workflow.add_edge("email_sender", END)
 
 app = workflow.compile()
 
-
-result = app.invoke(initial_state)
 
 result = app.invoke(initial_state)
 print(result["email_state"])

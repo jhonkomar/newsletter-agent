@@ -25,7 +25,7 @@ def search_node(state: AgentState) -> dict:
     }
     
 
-def scarped_node(state : AgentState) -> dict:
+def scraped_node(state : AgentState) -> dict:
     urls = state["search_results"]
     fal_url = []
     scraped_texts = []
@@ -39,8 +39,8 @@ def scarped_node(state : AgentState) -> dict:
             fal_url.append(url)
             continue
     return {
-        "scarped_details": scraped_texts,
-        "faliure_url": fal_url
+        "scraped_details": scraped_texts,
+        "failure_urls": fal_url
     }
 
 def summary_node(state : AgentState) -> dict:
